@@ -37,6 +37,7 @@ public class Main {
         }
         System.out.println("}");
         System.out.println();
+
         Functoins functoins = new Functoins();
 
         //альфа срез
@@ -46,7 +47,7 @@ public class Main {
         functoins.alphaSrez(mpA,elA,n,alpha);
         System.out.println();
 
-        //нормальное или не нормальное множество
+        //нормальное или субнормальное множество
         functoins.normality(mpA,n);
         System.out.println();
 
