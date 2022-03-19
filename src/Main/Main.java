@@ -1,9 +1,8 @@
 package Main;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Scanner;
-import java.util.Vector;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -77,8 +76,8 @@ public class Main {
         Euclid = Math.sqrt(Euclid);
         System.out.println("Мера нечеткости по Хемминговой метрике: "+ Hemming);
         System.out.println("Мера нечеткости по Евклидовой метрике: " + Euclid);
-        System.out.println("Индекс нечеткости по Хемминговой метрике: " + Hemming*(double) (2/n));
-        System.out.println("Индекс нечеткости по Евклидовой метрике: " + Euclid*(2/Math.sqrt(n)));
+        System.out.println("Индекс нечеткости по Хемминговой метрике: " + Hemming*(2.0/n));
+        System.out.println("Индекс нечеткости по Евклидовой метрике: " + Euclid*(2.0/Math.sqrt(n)));
         System.out.println();
 
         //множество В
@@ -118,5 +117,72 @@ public class Main {
         //объединение
         functoins.obedinenie(mpA,elA,mpB,elB,n);
         System.out.println();
+
+        //универсальное множество
+        Set<String> elUs = new HashSet<>();
+        for (int i = 0; i < n; i++) {
+            elUs.add(elA.get(i));
+            elUs.add(elB.get(i));
+        }
+        String[] Array = {};
+        Array = elUs.toArray(new String[elUs.size()]);
+        Iterator<String> iterator = elUs.iterator();
+
+        Vector<String> elU = new Vector<>(Arrays.asList(Array));
+
+
+        System.out.print( "Универсальное множество U: {");
+        for (int i = 0; i < elU.size(); i++) {
+            System.out.print(elU.get(i) + " ");
+        }
+        System.out.println("}");
+
+        //дополнение к А
+        Vector<Double> helpmpA = new Vector<>(mpA);
+        Vector<String> helpelA=new Vector<>(elA);
+        Vector<String> helpelU=new Vector<>(elU);
+        System.out.print("Дополнение к А: {");
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < elU.size(); j++) {
+                if (elA.get(i).equals(elU.get(j))) {
+                    double k = 1 - mpA.get(i);
+                    System.out.print("(" + k + "/" + elA.get(i) + ")");
+                    helpmpA.remove(mpA.get(i));
+                    helpelA.remove(elA.get(i));
+                    helpelU.remove(elU.get(j));
+                }
+
+            }
+        }
+
+        for (int i = 0; i < helpelU.size(); i++) {
+            System.out.print("(" + 1 + "/" + helpelU.get(i) + ")");
+        }
+        System.out.println("}");
+
+        //дополнение к В
+        Vector<Double> helpmpB = new Vector<>(mpB);
+        Vector<String> helpelB=new Vector<>(elB);
+        helpelU=new Vector<>(elU);
+        System.out.print("Дополнение к B: {");
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < elU.size(); j++) {
+                if (elB.get(i).equals(elU.get(j))) {
+                    double k = 1 - mpB.get(i);
+                    System.out.print("(" + k + "/" + elB.get(i) + ")");
+                    helpmpB.remove(mpB.get(i));
+                    helpelB.remove(elB.get(i));
+                    helpelU.remove(elU.get(j));
+                }
+
+            }
+        }
+
+        for (int i = 0; i < helpelU.size(); i++) {
+            System.out.print("(" + 1 + "/" + helpelU.get(i) + ")");
+        }
+        System.out.println("}");
     }
 }
