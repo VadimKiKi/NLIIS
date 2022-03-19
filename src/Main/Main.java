@@ -63,16 +63,29 @@ public class Main {
         System.out.println();
 
         //меры нечеткости
+        Vector <Integer> blizh = new Vector<>();
+
         double Hemming = 0, Euclid = 0;
         int norm = 0;
         for (int i = 0; i < n; i++)
         {
-            if (mpA.get(i) >= 0.5)
+            if (mpA.get(i) >= 0.5){
                 norm = 1;
-            else norm = 0;
+                blizh.add(norm);
+            }
+
+            else {
+                norm = 0;
+                blizh.add(norm);
+            }
             Hemming += Math.abs(mpA.get(i) - norm);
             Euclid += Math.pow((mpA.get(i) - norm), 2);
         }
+        System.out.print("Ближайшее: {");
+        for (int i = 0; i < blizh.size(); i++) {
+            System.out.print("("+blizh.get(i)+"/"+elA.get(i)+")");
+        }
+        System.out.println("}");
         Euclid = Math.sqrt(Euclid);
         System.out.println("Мера нечеткости по Хемминговой метрике: "+ Hemming);
         System.out.println("Мера нечеткости по Евклидовой метрике: " + Euclid);
